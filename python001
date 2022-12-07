@@ -1,0 +1,13 @@
+import time
+from bs4 import BeautifulSoup
+import requests
+import os
+import dload
+import csv
+
+
+def downloadImage(merge_path, pt, pf, keyword):
+    for x in range(pt, pf):
+        my_list = []
+        URL = f"https://www.shutterstock.com/search/{keyword}?kw=shutterstock&page={x}"
+        print(URL)
