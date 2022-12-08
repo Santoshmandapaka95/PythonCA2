@@ -11,3 +11,32 @@ def downloadImage(merge_path, pt, pf, keyword):
         my_list = []
         URL = f"https://www.shutterstock.com/search/{keyword}?kw=shutterstock&page={x}"
         print(URL)
+        headers = {
+            'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"}
+        r = requests.get(url=URL, headers=headers)
+        soup = BeautifulSoup(r.content, 'html5lib')
+        get_images = soup.findAll("img", {"class": "mui-1l7n00y-thumbnail"})
+        print(get_images)
+        image_base_path = merge_path + '/shutterstock/images/'
+        if not os.path.exists(image_base_path):
+            os.makedirs(image_base_path)
+        files_base_path = merge_path + '/shutterstock/files/'
+        if not os.path.exists(files_base_path):
+            os.makedirs(files_base_path)
+        image_save_path = f'{image_base_path}page{x}/'
+        if not os.path.exists(image_save_path):
+            os.makedirs(image_save_path)
+        j = 0
+        for get_data in get_images:
+            j += 1
+            save_img = f"{image_save_path}P{x}-{j}.jpg"
+            dload.save(get_data['src'], save_img)
+            data = [f'P{x}-{j}', f'{get_data["alt"]}', f'{get_data["src"]}']
+            my_list.append(data)
+        header = ['id', 'title', 'source']
+        save_csv = f'P{x}-shutterstock-data.csv'
+        with open(files_base_path + save_csv, 'w', encoding='UTF8', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(header)
+            writer.writerows(my_list)
+            time.sleep(6)
