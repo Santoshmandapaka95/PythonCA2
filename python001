@@ -1,3 +1,5 @@
+pip install html5lib
+pip install beautifulsoup4
 import time
 from bs4 import BeautifulSoup
 import requests
