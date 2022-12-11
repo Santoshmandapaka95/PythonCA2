@@ -42,7 +42,7 @@ def downloadImage(merge_path, pt, pf, keyword):
             writer.writerow(header)
             writer.writerows(my_list)
             time.sleep(6)
-path = str(r"D:\New_folder")
+path = str(r"D:\New_folder1")
 range_to = int(1)
 range_from = int(2)
 keyword_topic = str('health')
